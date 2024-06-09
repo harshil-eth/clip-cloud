@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Clip Cloud",
+  "description": "Extension to bookmark anything",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "index.html"
+  },
+
+  "permissions": ["contextMenus"],
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "icons": {}
+}
