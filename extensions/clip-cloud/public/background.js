@@ -23,7 +23,13 @@ chrome.runtime.onInstalled.addListener(function () {
 
   for (let i = 0; i < contexts.length; i++) {
     let context = contexts[i];
-    let title = 'Save ' + context;
+    let title;
+
+    if (context === 'page') {
+      title = 'Create new bookmark';
+    } else {
+      title = 'Save ' + context;
+    }
 
     chrome.contextMenus.create({
       title: title,
