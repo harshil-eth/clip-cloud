@@ -81,6 +81,3 @@ const createContextMenu = () => {
 chrome.runtime.onInstalled.addListener(() => {
   createContextMenu();
 });
-
-// Create context menus on extension startup
-createContextMenu();
