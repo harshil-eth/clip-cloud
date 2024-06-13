@@ -2,15 +2,29 @@
   "manifest_version": 3,
   "name": "Clip Cloud",
   "description": "Extension to bookmark links and images",
-  "version": "1.0.0",
+  "version": "0.0.1",
+
+  "permissions": ["contextMenus", "tabs", "activeTab", "storage"],
+
   "action": {
-    "default_popup": "index.html"
+    "default_popup": "index.html",
+    "default_title": "Clip Cloud",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "64": "icons/icon64.png",
+      "128": "icons/icon128.png"
+    }
   },
 
-  "permissions": ["contextMenus", "tabs"],
   "background": {
     "service_worker": "background.js"
   },
 
-  "icons": {}
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
+  }
 }

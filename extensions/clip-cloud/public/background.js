@@ -1,18 +1,38 @@
+// Function to handle context menu item click
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+  let data = {};
+
   if (info.menuItemId === 'page') {
-    console.log('Page item clicked. Status:', tab.url, tab.title);
-    createPopup();
+    data = { url: tab.url, title: tab.title, type: 'page' };
   } else if (info.menuItemId === 'link') {
-    console.log('Link item clicked.', tab);
+    data = {
+      url: info.linkUrl,
+      title: info.selectionText || tab.title,
+      type: 'link',
+    };
   } else if (info.menuItemId === 'image') {
-    console.log('Image item clicked. Image Link:', info.srcUrl, tab);
+    data = {
+      url: info.srcUrl,
+      title: info.selectionText || tab.title,
+      type: 'image',
+    };
   }
+
+  chrome.storage.local.set({ itemData: data }, () => {
+    if (chrome.runtime.lastError) {
+      console.error('Error setting storage:', chrome.runtime.lastError);
+      return;
+    }
+
+    console.log('Context menu data saved to storage:', data);
+    createPopup();
+  });
 });
 
 const createPopup = () => {
   chrome.windows.getCurrent(function (currentWindow) {
-    let width = Math.round(currentWindow.width * 0.2);
-    let height = Math.round(currentWindow.height * 0.4);
+    let width = Math.round(currentWindow.width * 0.35);
+    let height = Math.round(currentWindow.height * 0.5);
     let left = Math.round((currentWindow.width - width) / 2);
     let top = Math.round((currentWindow.height - height) / 2);
 
@@ -27,17 +47,26 @@ const createPopup = () => {
   });
 };
 
-chrome.runtime.onInstalled.addListener(() => {
-  let contexts = ['page', 'link', 'image'];
+// Function to create context menu items
+const createContextMenu = () => {
+  const contexts = ['page', 'link', 'image'];
 
-  for (let i = 0; i < contexts.length; i++) {
-    let context = contexts[i];
+  contexts.forEach((context) => {
     let title;
 
-    if (context === 'page') {
-      title = 'Create new bookmark';
-    } else {
-      title = 'Save ' + context;
+    switch (context) {
+      case 'page':
+        title = 'Create new bookmark';
+        break;
+      case 'link':
+        title = 'Save Link';
+        break;
+      case 'image':
+        title = 'Save Image';
+        break;
+      default:
+        title = 'Save';
+        break;
     }
 
     chrome.contextMenus.create({
@@ -45,5 +74,13 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: [context],
       id: context,
     });
-  }
+  });
+};
+
+// Event listener for extension installation
+chrome.runtime.onInstalled.addListener(() => {
+  createContextMenu();
 });
+
+// Create context menus on extension startup
+createContextMenu();
