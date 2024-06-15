@@ -7,6 +7,10 @@ function App() {
   const [data, setData] = useState({});
 
   useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
+
+  useEffect(() => {
     // Fetch itemData from chrome storage
     chrome.storage.local.get(['itemData'], (result) => {
       if (chrome.runtime.lastError) {
@@ -43,8 +47,12 @@ function App() {
   }, [itemData, pageData]);
 
   return (
-    <div>
-      <h1>{JSON.stringify(data)}</h1>
+    <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">
+      <div className="rounded-lg bg-gray-800 p-8 shadow-lg">
+        <h1 className="text-2xl font-bold">
+          {!data ? 'Loading...' : data.title}
+        </h1>
+      </div>
     </div>
   );
 }
