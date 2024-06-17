@@ -81,3 +81,22 @@ const createContextMenu = () => {
 chrome.runtime.onInstalled.addListener(() => {
   createContextMenu();
 });
+
+chrome.action.onClicked.addListener(() => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const tab = tabs[0];
+    const data = { url: tab.url, title: tab.title, type: 'page' };
+
+    console.log(`Fetched pageData: ${JSON.stringify(data)}`);
+
+    chrome.storage.local.set({ itemData: data }, () => {
+      if (chrome.runtime.lastError) {
+        console.error('Error setting storage:', chrome.runtime.lastError);
+        return;
+      }
+
+      console.log('Context menu data saved to storage:', data);
+      createPopup();
+    });
+  });
+});
