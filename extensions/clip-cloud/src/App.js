@@ -1,5 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+import { Logo } from './components/Logo';
+import { Profile } from './components/Profile';
 
 function App() {
   const [itemData, setItemData] = useState(null);
@@ -23,11 +25,7 @@ function App() {
 
   return (
     <div className="flex bg-gray-900">
-      <div className="relative mx-8 w-1/4">
-        <div className="absolute left-0 top-0 text-lg text-slate-400 hover:text-slate-300">
-          clip cloud
-        </div>
-      </div>
+      <Logo />
       <div className="mx-8 flex min-h-screen w-1/2 items-center justify-center text-white">
         <div className="rounded-lg bg-gray-800 p-8 shadow-lg">
           <h1 className="text-2xl font-bold text-slate-400 hover:text-slate-300">
@@ -35,11 +33,7 @@ function App() {
           </h1>
         </div>
       </div>
-      <div className="relative mx-8 w-1/4">
-        <div className="absolute right-0 top-0 text-lg text-slate-400 hover:text-slate-300">
-          profile
-        </div>
-      </div>
+      <Profile />
     </div>
   );
 }
