@@ -3,12 +3,6 @@ import { useState, useEffect } from 'react';
 
 function App() {
   const [itemData, setItemData] = useState(null);
-  const [pageData, setPageData] = useState(null);
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
 
   useEffect(() => {
     // Fetch itemData from chrome storage
@@ -27,31 +21,24 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
-    // Fetch active tab data
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
-      const data = { url: tab.url, title: tab.title, type: 'page' };
-      setPageData(data);
-      console.log(`Fetched pageData: ${JSON.stringify(data)}`);
-    });
-  }, []);
-
-  useEffect(() => {
-    // Update data based on itemData and pageData
-    if (pageData && pageData.url.startsWith('chrome-extension://')) {
-      setData(itemData);
-    } else {
-      setData(pageData);
-    }
-  }, [itemData, pageData]);
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">
-      <div className="rounded-lg bg-gray-800 p-8 shadow-lg">
-        <h1 className="text-2xl font-bold">
-          {!data ? 'Loading...' : data.title}
-        </h1>
+    <div className="flex bg-gray-900">
+      <div className="relative mx-8 w-1/4">
+        <div className="absolute left-0 top-0 text-lg text-slate-400 hover:text-slate-300">
+          clip cloud
+        </div>
+      </div>
+      <div className="mx-8 flex min-h-screen w-1/2 items-center justify-center text-white">
+        <div className="rounded-lg bg-gray-800 p-8 shadow-lg">
+          <h1 className="text-2xl font-bold text-slate-400 hover:text-slate-300">
+            {!itemData ? 'Loading...' : itemData.title}
+          </h1>
+        </div>
+      </div>
+      <div className="relative mx-8 w-1/4">
+        <div className="absolute right-0 top-0 text-lg text-slate-400 hover:text-slate-300">
+          profile
+        </div>
       </div>
     </div>
   );

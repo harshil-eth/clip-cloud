@@ -7,7 +7,6 @@
   "permissions": ["contextMenus", "tabs", "activeTab", "storage"],
 
   "action": {
-    "default_popup": "index.html",
     "default_title": "Clip Cloud",
     "default_icon": {
       "16": "icons/icon16.png",
