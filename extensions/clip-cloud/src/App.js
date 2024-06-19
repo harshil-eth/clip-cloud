@@ -5,7 +5,7 @@ import Profile from './components/Profile';
 
 function App() {
   return (
-    <div className="flex min-h-full min-w-full flex-col bg-gray-900">
+    <div className="min-w-screen flex min-h-screen flex-col bg-gray-800">
       <div className="xsm:flex-row mx-8 flex flex-col items-center justify-between py-4">
         <Logo />
         <Profile />
